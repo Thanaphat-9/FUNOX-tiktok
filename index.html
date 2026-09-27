@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUNOX Donate</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "Helvetica Neue", Arial, sans-serif;
+    background: #f2f2f7;
+    color: #111;
+}
+
+.container {
+    max-width: 430px;
+    margin: auto;
+    min-height: 100vh;
+    padding: 25px 18px 40px;
+}
+
+.header {
+    text-align: center;
+    padding: 25px 0;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.header p {
+    margin-top: 8px;
+    color: #777;
+}
+
+.card {
+    background: white;
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.08);
+}
+
+.label {
+    display: block;
+    font-weight: 700;
+    margin: 18px 0 8px;
+}
+
+.input {
+    width: 100%;
+    border: 0;
+    background: #f2f2f7;
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 16px;
+    outline: none;
+}
+
+.amounts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.amount {
+    border: 0;
+    border-radius: 14px;
+    padding: 13px 5px;
+    background: #f2f2f7;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.amount.active {
+    background: #111;
+    color: white;
+}
+
+textarea.input {
+    height: 110px;
+    resize: none;
+}
+
+.donate {
+    width: 100%;
+    margin-top: 25px;
+    border: 0;
+    border-radius: 18px;
+    padding: 17px;
+    background: #111;
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.donate:active {
+    transform: scale(.98);
+}
+
+.note {
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+    margin-top: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>💬 FUNOX Donate</h1>
+        <p>ส่งข้อความให้ผมระหว่าง LIVE</p>
+    </div>
+
+    <div class="card">
+
+        <label class="label">จำนวนเงิน</label>
+
+        <div class="amounts">
+            <button class="amount active" onclick="selectAmount(20,this)">20 ฿</button>
+            <button class="amount" onclick="selectAmount(50,this)">50 ฿</button>
+            <button class="amount" onclick="selectAmount(100,this)">100 ฿</button>
+        </div>
+
+        <input
+            id="customAmount"
+            class="input"
+            type="number"
+            placeholder="หรือใส่จำนวนเงินเอง"
+            style="margin-top:10px;"
+        >
+
+        <label class="label">ชื่อของคุณ</label>
+
+        <input
+            id="name"
+            class="input"
+            type="text"
+            maxlength="30"
+            placeholder="เช่น ฟู"
+        >
+
+        <label class="label">ข้อความ</label>
+
+        <textarea
+            id="message"
+            class="input"
+            maxlength="150"
+            placeholder="พิมพ์ข้อความถึงผม..."
+        ></textarea>
+
+        <button class="donate" onclick="donate()">
+            💸 โดเนท
+        </button>
+
+        <div class="note">
+            ระบบทดลอง — ยังไม่ได้เชื่อมการชำระเงินจริง
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+let selectedAmount = 20;
+
+function selectAmount(amount, button) {
+
+    selectedAmount = amount;
+
+    document.querySelectorAll(".amount")
+        .forEach(b => b.classList.remove("active"));
+
+    button.classList.add("active");
+
+    document.getElementById("customAmount").value = "";
+}
+
+function donate() {
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const message =
+        document.getElementById("message").value.trim();
+
+    const custom =
+        document.getElementById("customAmount").value;
+
+    const amount =
+        custom ? Number(custom) : selectedAmount;
+
+    if (!name) {
+        alert("กรุณาใส่ชื่อ");
+        return;
+    }
+
+    if (!message) {
+        alert("กรุณาใส่ข้อความ");
+        return;
+    }
+
+    if (!amount || amount < 1) {
+        alert("กรุณาใส่จำนวนเงิน");
+        return;
+    }
+
+    alert(
+        "💬 ข้อความใหม่\\n\\n" +
+        name + "\\n" +
+        message + "\\n\\n" +
+        "💰 " + amount + " บาท"
+    );
+}
+
+</script>
+
+</body>
+</html>
